@@ -8,7 +8,7 @@
         <property name="dataSource"
                   ref="dataSource"/>
         <property name="packagesToScan"
-                  value="com.challenge.TrackingChallenge.models"/>
+                  value="com.challenge.TrackingChallenge.domain"/>
         <property name="hibernateProperties">
             <props>
                 <!--                <prop key="hibernate.hbm2ddl.auto">-->
