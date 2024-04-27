@@ -1,5 +1,7 @@
 package com.challenge.TrackingChallenge.controllers;
 
+import com.challenge.TrackingChallenge.config.security.TokenService;
+import com.challenge.TrackingChallenge.domain.Usuario.LoginDTO;
 import com.challenge.TrackingChallenge.domain.Usuario.Usuario;
 import com.challenge.TrackingChallenge.domain.Usuario.UsuarioDTO;
 import com.challenge.TrackingChallenge.domain.Usuario.UsuarioRegistroDTO;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,12 +28,15 @@ public class AutenticacaoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid UsuarioDTO usuarioDTO){
         var usernamePassword = new UsernamePasswordAuthenticationToken(usuarioDTO.login(), usuarioDTO.senha());
         var auth = authenticationManager.authenticate(usernamePassword);
-
-        return ResponseEntity.ok().build();
+        var token = tokenService.gerarToken((Usuario) auth.getPrincipal());
+        return new ResponseEntity(new LoginDTO(token), HttpStatus.OK);
     }
 
     @PostMapping("/registrar")
