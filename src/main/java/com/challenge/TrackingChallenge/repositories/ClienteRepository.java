@@ -1,6 +1,7 @@
 package com.challenge.TrackingChallenge.repositories;
 
 import com.challenge.TrackingChallenge.domain.Cliente.Cliente;
+import com.challenge.TrackingChallenge.exception.EntityNotFoundException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,6 +36,21 @@ public class ClienteRepository {
         }
     }
 
+    public Cliente listarPorId(long id) {
+        Session session = sessionFactory.openSession();
+
+        try {
+            String sql = "FROM ClienteFisica WHERE id = :id";
+            Query query = session.createQuery(sql);
+            query.setParameter("id", id);
+            return (Cliente) query.uniqueResult();
+        } catch (HibernateException he) {
+            throw new HibernateException("Erro ao consultar no banco de dados! Causa: " + he.getMessage());
+        } finally {
+            session.close();
+        }
+    }
+
     public Cliente listarPorCpf(String cpf) {
         Session session = sessionFactory.openSession();
 
@@ -44,7 +60,7 @@ public class ClienteRepository {
             query.setParameter("cpf", cpf);
             return (Cliente) query.uniqueResult();
         } catch (HibernateException he) {
-            throw new HibernateException("Erro ao buscar no banco de dados! Causa: " + he.getMessage());
+            throw new HibernateException("Erro ao consultar no banco de dados! Causa: " + he.getMessage());
         } finally {
             session.close();
         }
@@ -78,6 +94,28 @@ public class ClienteRepository {
                 transaction.rollback();
             }
             throw new HibernateException("Erro ao atualizar no banco de dados! Causa: " + he.getMessage());
+        } finally {
+            session.close();
+        }
+    }
+
+    public void deletar(long id){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Cliente cliente = session.get(Cliente.class, id);
+            if (cliente != null) {
+                session.remove(cliente);
+                transaction.commit();
+            } else {
+                throw new EntityNotFoundException("Usuário não encontrado no banco de dados");
+            }
+        } catch (HibernateException he) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new HibernateException("Erro ao deletar! Causa: " + he.getMessage());
         } finally {
             session.close();
         }

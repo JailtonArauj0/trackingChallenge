@@ -24,6 +24,16 @@ public class ClienteController {
         return new ResponseEntity<>(clienteService.cadastrarCliente(clienteDTO), HttpStatus.CREATED);
     }
 
+    @GetMapping("/buscarPorId")
+    public ResponseEntity<Cliente> listarPorCpf(@RequestParam long id) {
+        Cliente cliente = clienteService.listarPorId(id);
+        if (cliente != null) {
+            return new ResponseEntity<>(cliente, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    }
+
     @GetMapping("/buscarPorCpf")
     public ResponseEntity<Cliente> listarPorCpf(@RequestParam String cpf) {
         // todo criar função de validar e fazer a validação antes da busca
@@ -45,7 +55,6 @@ public class ClienteController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
-    // todo list by id
     @PatchMapping
     public ResponseEntity<Cliente> atualizarCliente(@Valid @RequestBody ClienteDTO clienteDTO){
         if(clienteDTO.tipoPessoa().getTipo().equalsIgnoreCase("PF")){
@@ -64,5 +73,11 @@ public class ClienteController {
             return new ResponseEntity<>(clienteAtualizado, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletarCliente(@PathVariable long id){
+        clienteService.deletarCliente(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

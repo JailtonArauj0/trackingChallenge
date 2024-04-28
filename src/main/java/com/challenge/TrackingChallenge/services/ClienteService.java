@@ -44,16 +44,24 @@ public class ClienteService {
         }
     }
 
-    public Cliente listarPorCpf(String cpf){
-        return clienteRepository.listarPorCpf(cpf);
+    public Cliente listarPorId(long id){
+        return clienteRepository.listarPorId(id);
     }
 
     public Cliente listarPorCnpj(String cnpj){
         return clienteRepository.listarPorCnpj(cnpj);
     }
 
+    public Cliente listarPorCpf(String cpf){
+        return clienteRepository.listarPorCpf(cpf);
+    }
+
     public Cliente atualizarCliente(Cliente cliente){
         return clienteRepository.atualizar(cliente);
+    }
+
+    public void deletarCliente(long id){
+        clienteRepository.deletar(id);
     }
 
 }
