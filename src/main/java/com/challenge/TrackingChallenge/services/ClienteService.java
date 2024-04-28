@@ -8,9 +8,6 @@ import com.challenge.TrackingChallenge.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 @Service
 public class ClienteService {
 
@@ -36,7 +33,8 @@ public class ClienteService {
                 pj.setTelefone(clienteDTO.telefone());
                 pj.setEmail(clienteDTO.email());
                 pj.setCnpj(clienteDTO.cnpj());
-                pj.setDataInscricao(LocalDate.parse(clienteDTO.dataInscricao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+                pj.setRazaoSocial(clienteDTO.razaoSocial());
+                pj.setDataInscricao(clienteDTO.dataInscricao());
                 return clienteRepository.salvar(pj);
             }
 
@@ -54,5 +52,8 @@ public class ClienteService {
         return clienteRepository.listarPorCnpj(cnpj);
     }
 
+    public Cliente atualizarCliente(Cliente cliente){
+        return clienteRepository.atualizar(cliente);
+    }
 
 }

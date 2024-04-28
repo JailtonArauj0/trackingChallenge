@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record ClienteDTO(
+        long id,
         @NotNull
         String nome,
         @Size(min = 8, max = 9, message = "O sexo deve ser Masculino ou Feminino.")

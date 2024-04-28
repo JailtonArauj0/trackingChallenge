@@ -2,8 +2,11 @@ package com.challenge.TrackingChallenge.controllers;
 
 import com.challenge.TrackingChallenge.domain.Cliente.Cliente;
 import com.challenge.TrackingChallenge.domain.Cliente.ClienteDTO;
+import com.challenge.TrackingChallenge.domain.Cliente.ClienteFisica;
+import com.challenge.TrackingChallenge.domain.Cliente.ClienteJuridica;
 import com.challenge.TrackingChallenge.services.ClienteService;
 import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +44,25 @@ public class ClienteController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+    }
+    // todo list by id
+    @PatchMapping
+    public ResponseEntity<Cliente> atualizarCliente(@Valid @RequestBody ClienteDTO clienteDTO){
+        if(clienteDTO.tipoPessoa().getTipo().equalsIgnoreCase("PF")){
+            Cliente cliente = new ClienteFisica();
+            BeanUtils.copyProperties(clienteDTO, cliente);
+            Cliente clienteAtualizado = clienteService.atualizarCliente(cliente);
+            if (clienteAtualizado != null) {
+                return new ResponseEntity<>(clienteAtualizado, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Cliente cliente = new ClienteJuridica();
+        BeanUtils.copyProperties(clienteDTO, cliente);
+        Cliente clienteAtualizado = clienteService.atualizarCliente(cliente);
+        if (clienteAtualizado != null) {
+            return new ResponseEntity<>(clienteAtualizado, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

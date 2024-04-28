@@ -64,4 +64,22 @@ public class ClienteRepository {
             session.close();
         }
     }
+
+    public Cliente atualizar(Cliente cliente) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Cliente clienteAtualizado = session.merge(cliente);
+            transaction.commit();
+            return clienteAtualizado;
+        } catch (HibernateException he) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new HibernateException("Erro ao atualizar no banco de dados! Causa: " + he.getMessage());
+        } finally {
+            session.close();
+        }
+    }
 }
