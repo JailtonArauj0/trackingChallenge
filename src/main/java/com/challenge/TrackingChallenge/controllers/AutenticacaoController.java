@@ -5,6 +5,7 @@ import com.challenge.TrackingChallenge.domain.Usuario.LoginDTO;
 import com.challenge.TrackingChallenge.domain.Usuario.Usuario;
 import com.challenge.TrackingChallenge.domain.Usuario.UsuarioDTO;
 import com.challenge.TrackingChallenge.domain.Usuario.UsuarioRegistroDTO;
+import com.challenge.TrackingChallenge.exception.CustomException;
 import com.challenge.TrackingChallenge.repositories.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,7 @@ public class AutenticacaoController {
     @PostMapping("/registrar")
     public ResponseEntity<Usuario> registrar(@RequestBody @Valid UsuarioRegistroDTO usuarioRegistroDTO){
         if(usuarioRepository.listarUsuario(usuarioRegistroDTO.login()) != null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-            //TODO retornar exceção customizada com mensagem detalhando o problema
+            throw new CustomException("Já existe um usuario com o login informado.");
         }
         String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioRegistroDTO.senha());
         Usuario usuario = new Usuario(usuarioRegistroDTO.login(), senhaCriptografada, usuarioRegistroDTO.role());
