@@ -5,8 +5,11 @@ import com.challenge.TrackingChallenge.domain.Cliente.ClienteDTO;
 import com.challenge.TrackingChallenge.domain.Cliente.ClienteFisica;
 import com.challenge.TrackingChallenge.domain.Cliente.ClienteJuridica;
 import com.challenge.TrackingChallenge.repositories.ClienteRepository;
+import com.challenge.TrackingChallenge.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ClienteService {
@@ -48,12 +51,24 @@ public class ClienteService {
         return clienteRepository.listarPorId(id);
     }
 
+    public List<Cliente> listarTodos(){
+        return clienteRepository.listarTodos();
+    }
+
     public Cliente listarPorCnpj(String cnpj){
-        return clienteRepository.listarPorCnpj(cnpj);
+        StringUtils validarCnpj = new StringUtils();
+        if (validarCnpj.cpfUtil(cnpj) != null){
+            return clienteRepository.listarPorCnpj(cnpj);
+        }
+        return null;
     }
 
     public Cliente listarPorCpf(String cpf){
-        return clienteRepository.listarPorCpf(cpf);
+        StringUtils validarCpf = new StringUtils();
+        if (validarCpf.cpfUtil(cpf) != null){
+            return clienteRepository.listarPorCpf(cpf);
+        }
+        return null;
     }
 
     public Cliente atualizarCliente(Cliente cliente){
