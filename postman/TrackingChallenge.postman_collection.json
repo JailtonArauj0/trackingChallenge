@@ -1,0 +1,544 @@
+{
+	"info": {
+		"_postman_id": "d484efad-bd99-4c41-a5cc-ef1033991746",
+		"name": "TrackingChallenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26203065"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Cadastro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"teste\",\r\n    \"senha\": \"teste\",\r\n    \"role\": \"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/registrar",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"teste\",\r\n    \"senha\": \"teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Cadastro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQzNTE1Mjl9.JwOHIcLPu54ozOOow1C5HNKg4QRA1wGk3LPtT9SUmso",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"\",\r\n    \"razaoSocial\": \"\",\r\n    \"dataInscricao\": \"\",\r\n    \"cnpj\": \"\",\r\n    \"email\": \"\",\r\n    \"endereco\": \"\",\r\n    \"telefone\": \"\",\r\n    \"tipoPessoa\": \"JURIDICA\" // FISICA\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/cliente",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarPorId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQzMjQxOTJ9.wzhqqW4R1M5e2s_bRbbIOzUDpyjQ3N9L899vvv7_CA0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cliente/listarPorId?id=2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cliente",
+								"listarPorId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarTodos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQzNTE1Mjl9.JwOHIcLPu54ozOOow1C5HNKg4QRA1wGk3LPtT9SUmso",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cliente/listarTodos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cliente",
+								"listarTodos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarPorCpf",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQ0NDM1OTh9.I7ZdWmwWZcZrC1WGPdb_Cv7GcWvltSNiRV96v_yXbZs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cliente/listarPorCpf?cpf=10606308421",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cliente",
+								"listarPorCpf"
+							],
+							"query": [
+								{
+									"key": "cpf",
+									"value": "10606308421"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarPorCnpj",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQyNjA4MjZ9.-X1-heFGMbHA0p74TBolBndinb7YJ4fFCMYgOn1QlF4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cliente/listarPorCnpj?cnpj=03585974000172",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cliente",
+								"listarPorCnpj"
+							],
+							"query": [
+								{
+									"key": "cnpj",
+									"value": "03585974000172"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQzMTc5NjZ9.haruz3qxVT2ckttybrrk1Fdx3Kh-GRITfJWK-soU0F4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"nome\": \"\",\r\n    \"razaoSocial\": \"\",\r\n    \"dataInscricao\": \"\",\r\n    \"cnpj\": \"\",\r\n    \"email\": \"\",\r\n    \"endereco\": \"\",\r\n    \"telefone\": \"\",\r\n    \"tipoPessoa\": \"JURIDICA\" //FISICA\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/cliente",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQzMjE5NTF9.WcFdxzzKzd7ZkH9zZoYoiTN66iB8CK1u2caIaCb9TX4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cliente?id=5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cliente"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Veiculo",
+			"item": [
+				{
+					"name": "Cadastrar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQ0NDM1OTh9.I7ZdWmwWZcZrC1WGPdb_Cv7GcWvltSNiRV96v_yXbZs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"marca\": \"Honda\",\r\n    \"modelo\": \"Bros 160\",\r\n    \"cor\": \"Branca\",\r\n    \"tipo\": \"Motocicleta\",\r\n    \"combustivel\": \"Flex\",\r\n    \"anoFabricacao\": \"2016\",\r\n    \"placa\": \"QGN8880\",\r\n    \"renavam\": \"01088308228\",\r\n    \"chassi\": \"9C2KD0810GR45008212\",\r\n    \"idCliente\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/veiculos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"veiculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarPorId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQ1OTgxMTV9.pDTpY9YlkRFyQOdTrDLxj52-d-FUTaeKAylCHhvIO-M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/veiculos/listarPorId?id=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"veiculos",
+								"listarPorId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarPorParametros",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQ2MDQxOTV9.UeftwUDZZcbdEVDjvi9lvbDnFg1NzedjzGcQXhVX1k8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/veiculos/listarPorParametros?placa=QGN8881&renavam=01088308224&chassi=9C2KD0810GR4500821",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"veiculos",
+								"listarPorParametros"
+							],
+							"query": [
+								{
+									"key": "placa",
+									"value": "QGN8881"
+								},
+								{
+									"key": "renavam",
+									"value": "01088308224"
+								},
+								{
+									"key": "chassi",
+									"value": "9C2KD0810GR4500821"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarPorIdCliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQ2MDU5Njl9.Q5OXoIaIYqIFRgWNX2E02MfWdD-fowANRPtZ7-RIKvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/veiculos/listarTodosPorIdCliente?idCliente=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"veiculos",
+								"listarTodosPorIdCliente"
+							],
+							"query": [
+								{
+									"key": "idCliente",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQ2MTgyNzJ9.U7TSzN3QZX5S_TqFI5lT2hRBWVqGP5xviab19iHvNpw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 10,\r\n    \"marca\": \"Honda\",\r\n    \"modelo\": \"CG 160\",\r\n    \"cor\": \"Branca\",\r\n    \"tipo\": \"Motocicleta\",\r\n    \"combustivel\": \"Flex\",\r\n    \"anoFabricacao\": \"2024\",\r\n    \"placa\": \"QPN8686\",\r\n    \"renavam\": \"01088307678\",\r\n    \"chassi\": \"9C2KF0810GR4505822\",\r\n    \"idCliente\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/veiculos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"veiculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGFsbGVuZ2UtdGVzdCIsInN1YiI6ImZsYW1lc3ppaW4iLCJleHAiOjE3MTQ2OTUxMzR9.1AJ9wZjebKeBZQLlIp7YhqT4ueyuykx1iKB0Vya8zb0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/veiculos?id=16",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"veiculos"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "16"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
