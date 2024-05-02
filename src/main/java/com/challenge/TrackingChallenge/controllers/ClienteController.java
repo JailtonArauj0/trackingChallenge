@@ -10,7 +10,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cliente")
@@ -24,7 +27,7 @@ public class ClienteController {
         return new ResponseEntity<>(clienteService.cadastrarCliente(clienteDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping("/buscarPorId")
+    @GetMapping("/listarPorId")
     public ResponseEntity<Cliente> listarPorCpf(@RequestParam long id) {
         Cliente cliente = clienteService.listarPorId(id);
         if (cliente != null) {
@@ -34,9 +37,9 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/buscarPorCpf")
+    @GetMapping("/listarPorCpf")
     public ResponseEntity<Cliente> listarPorCpf(@RequestParam String cpf) {
-        // todo criar função de validar e fazer a validação antes da busca
+
         Cliente cliente = clienteService.listarPorCpf(cpf);
         if (cliente != null) {
             return new ResponseEntity<>(cliente, HttpStatus.OK);
@@ -45,16 +48,25 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/buscarPorCnpj")
+    @GetMapping("/listarPorCnpj")
     public ResponseEntity<Cliente> listarPorCnpj(@RequestParam String cnpj) {
-        // todo criar função de validar e fazer a validação antes da busca
         Cliente cliente = clienteService.listarPorCnpj(cnpj);
         if (cliente != null) {
             return new ResponseEntity<>(cliente, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/listarTodos")
+    public ResponseEntity<List<Cliente>> listarTodos() {
+        List<Cliente> clientes = clienteService.listarTodos();
+        if (clientes != null) {
+            return new ResponseEntity<>(clientes, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PatchMapping
     public ResponseEntity<Cliente> atualizarCliente(@Valid @RequestBody ClienteDTO clienteDTO){
         if(clienteDTO.tipoPessoa().getTipo().equalsIgnoreCase("PF")){
@@ -75,8 +87,9 @@ public class ClienteController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deletarCliente(@PathVariable long id){
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping
+    public ResponseEntity deletarCliente(@RequestParam Long id){
         clienteService.deletarCliente(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
