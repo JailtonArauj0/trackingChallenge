@@ -4,7 +4,9 @@
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 
-Projeto criado para uma posição de analista backend, usando Java, Spring boot, MySQL e Flyway Migrations, além de Spring Security e JWT Token para autenticação e autorização.
+Desafio técnico para uma posição de analista backend. 
+
+As tecnologias utilizadas foram Java, Spring boot, MySQL e Flyway Migrations, além de Spring Security e JWT Token para autenticação e autorização.
 
 A API consiste em um CRUD de Clientes e Veículos associando a um Cliente específico.
 
