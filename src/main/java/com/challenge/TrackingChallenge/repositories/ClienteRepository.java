@@ -158,8 +158,9 @@ public class ClienteRepository {
             if (cliente != null) {
                 session.remove(cliente);
                 transaction.commit();
+            } else {
+                throw new EntityNotFoundException("Usuário não encontrado no banco de dados");
             }
-            throw new EntityNotFoundException("Usuário não encontrado no banco de dados");
 
         } catch (HibernateException he) {
             if (transaction != null) {
