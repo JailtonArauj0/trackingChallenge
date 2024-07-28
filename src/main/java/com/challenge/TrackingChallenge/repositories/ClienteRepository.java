@@ -63,7 +63,7 @@ public class ClienteRepository {
         Session session = sessionFactory.openSession();
 
         try {
-            String sql = "FROM ClienteFisica WHERE id = :id";
+            String sql = "FROM Cliente WHERE id = :id";
             Query query = session.createQuery(sql);
             query.setParameter("id", id);
             Cliente cliente = (Cliente) query.uniqueResult();
