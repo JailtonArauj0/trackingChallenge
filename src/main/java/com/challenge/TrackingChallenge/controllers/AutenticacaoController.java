@@ -7,6 +7,7 @@ import com.challenge.TrackingChallenge.domain.Usuario.UsuarioDTO;
 import com.challenge.TrackingChallenge.domain.Usuario.UsuarioRegistroDTO;
 import com.challenge.TrackingChallenge.exception.CustomException;
 import com.challenge.TrackingChallenge.repositories.UsuarioRepository;
+import com.challenge.TrackingChallenge.utils.ResponsePadrao;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,9 @@ public class AutenticacaoController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private ResponsePadrao responsePadrao;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid UsuarioDTO usuarioDTO){
         var usernamePassword = new UsernamePasswordAuthenticationToken(usuarioDTO.login(), usuarioDTO.senha());
@@ -41,13 +45,24 @@ public class AutenticacaoController {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<Usuario> registrar(@RequestBody @Valid UsuarioRegistroDTO usuarioRegistroDTO){
+    public ResponseEntity<ResponsePadrao> registrar(@RequestBody @Valid UsuarioRegistroDTO usuarioRegistroDTO){
         if(usuarioRepository.listarUsuario(usuarioRegistroDTO.login()) != null){
             throw new CustomException("Já existe um usuario com o login informado.");
         }
         String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioRegistroDTO.senha());
         Usuario usuario = new Usuario(usuarioRegistroDTO.login(), senhaCriptografada, usuarioRegistroDTO.role());
 
-        return new ResponseEntity<>(usuarioRepository.salvarUsuario(usuario), HttpStatus.CREATED);
+        Usuario usuarioCadastrado = usuarioRepository.salvarUsuario(usuario);
+
+        if (usuarioCadastrado != null){
+            responsePadrao.setMensagem("Usuário registrado com sucesso.");
+            responsePadrao.setStatus(HttpStatus.CREATED.value());
+            return new ResponseEntity<>(responsePadrao, HttpStatus.CREATED);
+
+        }else{
+            responsePadrao.setMensagem("Erro ao registrar usuário.");
+            responsePadrao.setStatus(HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(responsePadrao, HttpStatus.BAD_REQUEST);
+        }
     }
 }

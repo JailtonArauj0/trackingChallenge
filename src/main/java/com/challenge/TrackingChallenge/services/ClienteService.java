@@ -18,64 +18,58 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
 
     public Cliente cadastrarCliente(ClienteDTO clienteDTO) {
-        try {
-            if (clienteDTO.tipoPessoa().getTipo().equalsIgnoreCase("PF")) {
-                ClienteFisica pf = new ClienteFisica();
-                pf.setNome(clienteDTO.nome());
-                pf.setEndereco(clienteDTO.endereco());
-                pf.setTelefone(clienteDTO.telefone());
-                pf.setEmail(clienteDTO.email());
-                pf.setCpf(clienteDTO.cpf());
-                pf.setSexo(clienteDTO.sexo());
-                pf.setDataNascimento(clienteDTO.dataNascimento());
-                return clienteRepository.salvar(pf);
-            } else {
-                ClienteJuridica pj = new ClienteJuridica();
-                pj.setNome(clienteDTO.nome());
-                pj.setEndereco(clienteDTO.endereco());
-                pj.setTelefone(clienteDTO.telefone());
-                pj.setEmail(clienteDTO.email());
-                pj.setCnpj(clienteDTO.cnpj());
-                pj.setRazaoSocial(clienteDTO.razaoSocial());
-                pj.setDataInscricao(clienteDTO.dataInscricao());
-                return clienteRepository.salvar(pj);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        if (clienteDTO.tipoPessoa().getTipo().equalsIgnoreCase("PF")) {
+            ClienteFisica pf = new ClienteFisica();
+            pf.setNome(clienteDTO.nome());
+            pf.setEndereco(clienteDTO.endereco());
+            pf.setTelefone(clienteDTO.telefone());
+            pf.setEmail(clienteDTO.email());
+            pf.setCpf(clienteDTO.cpf());
+            pf.setSexo(clienteDTO.sexo());
+            pf.setDataNascimento(clienteDTO.dataNascimento());
+            return clienteRepository.salvar(pf);
+        } else {
+            ClienteJuridica pj = new ClienteJuridica();
+            pj.setNome(clienteDTO.nome());
+            pj.setEndereco(clienteDTO.endereco());
+            pj.setTelefone(clienteDTO.telefone());
+            pj.setEmail(clienteDTO.email());
+            pj.setCnpj(clienteDTO.cnpj());
+            pj.setRazaoSocial(clienteDTO.razaoSocial());
+            pj.setDataInscricao(clienteDTO.dataInscricao());
+            return clienteRepository.salvar(pj);
         }
     }
 
-    public Cliente listarPorId(long id){
+    public Cliente listarPorId(long id) {
         return clienteRepository.listarPorId(id);
     }
 
-    public List<Cliente> listarTodos(){
+    public List<Cliente> listarTodos() {
         return clienteRepository.listarTodos();
     }
 
-    public Cliente listarPorCnpj(String cnpj){
+    public Cliente listarPorCnpj(String cnpj) {
         StringUtils validarCnpj = new StringUtils();
-        if (validarCnpj.cpfUtil(cnpj) != null){
+        if (validarCnpj.cnpjUtil(cnpj) != null) {
             return clienteRepository.listarPorCnpj(cnpj);
         }
         return null;
     }
 
-    public Cliente listarPorCpf(String cpf){
+    public Cliente listarPorCpf(String cpf) {
         StringUtils validarCpf = new StringUtils();
-        if (validarCpf.cpfUtil(cpf) != null){
+        if (validarCpf.cpfUtil(cpf) != null) {
             return clienteRepository.listarPorCpf(cpf);
         }
         return null;
     }
 
-    public Cliente atualizarCliente(Cliente cliente){
+    public Cliente atualizarCliente(Cliente cliente) {
         return clienteRepository.atualizar(cliente);
     }
 
-    public void deletarCliente(long id){
+    public void deletarCliente(long id) {
         clienteRepository.deletar(id);
     }
 
