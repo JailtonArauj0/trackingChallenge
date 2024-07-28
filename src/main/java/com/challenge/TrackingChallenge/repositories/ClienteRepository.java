@@ -129,17 +129,21 @@ public class ClienteRepository {
             Cliente clienteValido = session.get(Cliente.class, cliente.getId());
             if (clienteValido != null) {
                 transaction = session.beginTransaction();
-                Cliente clienteAtualizado = session.merge(cliente);
+
+                if (!clienteValido.getClass().equals(cliente.getClass())) {
+                    session.delete(clienteValido); // Deletar apenas se o tipo de cliente mudou
+                }
+                Cliente clienteAtualizado = (Cliente) session.merge(cliente);
                 transaction.commit();
                 return clienteAtualizado;
+            } else {
+                throw new EntityNotFoundException("Cliente não encontrado para os parâmetros informados");
             }
-            throw new EntityNotFoundException("Cliente não encontrado para os parâmetros informados");
-
         } catch (HibernateException he) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new HibernateException("Erro ao atualizar no banco de dados!");
+            throw new HibernateException("Erro ao atualizar no banco de dados!", he);
         } finally {
             session.close();
         }
