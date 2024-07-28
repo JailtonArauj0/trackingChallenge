@@ -2,6 +2,8 @@ package com.challenge.TrackingChallenge.exception.excetionHandler;
 
 import com.challenge.TrackingChallenge.exception.CustomException;
 import com.challenge.TrackingChallenge.exception.EntityNotFoundException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.hibernate.HibernateException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,23 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 
         return handleExceptionInternal(ex, problem, headers, status, request);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
+        List<Problem.Field> fields = new ArrayList<>();
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            String name = violation.getPropertyPath().toString();
+            String message = violation.getMessage();
+            fields.add(new Problem.Field(name, message));
+        }
+
+        Problem problem = new Problem(LocalDateTime.now());
+        problem.setStatus(HttpStatus.BAD_REQUEST.value());
+        problem.setTitle("Um ou mais campos inválidos, preencha corretamente!");
+        problem.setFields(fields);
+
+        return new ResponseEntity<>(problem, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CustomException.class)
