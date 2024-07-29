@@ -19,11 +19,19 @@ git clone https://github.com/JailtonArauj0/trackingChallenge
 
 2. Instale as dependências usando o maven
 3. Instale o [MySQL](https://www.mysql.com/)
-4. Crie um banco de dados e atualize as configurações do arquivo hibernateConfig.xml de acordo com seu ambiente:
+4. Crie um banco de dados e atualize as configurações dos arquivos hibernateConfig.xml e application.properties de acordo com seu ambiente:
 ```bash
+  hibernateConfig.xml
 <property name="url" value="jdbc:mysql://localhost:3306/seu_banco"/>
 <property name="username" value="seu_usuario"/>
 <property name="password" value="sua_senha"/>
+
+  application.properties
+spring.flyway.url=jdbc:mysql://localhost:3306/seu_banco
+spring.flyway.user=seu_usuario
+spring.flyway.password=sua_senha
+spring.flyway.schemas=seu_banco
+spring.flyway.locations=classpath:db/migration
 ```
 5. Rode a aplicação.
 
