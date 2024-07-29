@@ -31,7 +31,7 @@ public record VeiculoDTO(
         @NotNull
         String chassi,
         @NotNull
-        long idCliente
+        Long idCliente
 ) {
 
     public VeiculoDTO(Veiculo veiculo) {
