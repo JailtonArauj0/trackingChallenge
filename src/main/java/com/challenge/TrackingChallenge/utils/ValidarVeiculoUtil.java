@@ -16,17 +16,17 @@ public class ValidarVeiculoUtil {
 
     public boolean validarVeiculo(Veiculo veiculo) {
         Cliente clienteExiste = clienteRepository.listarPorId(veiculo.getIdCliente());
-        Veiculo placaExiste = veiculoRepository.listarPorPlaca(veiculo.getPlaca());
-        Veiculo renavamExiste = veiculoRepository.listarPorRenavam(veiculo.getRenavam());
-        Veiculo chassiExiste = veiculoRepository.listarPorChassi(veiculo.getChassi());
+        boolean placaExiste = veiculoRepository.listarPorPlaca(veiculo.getPlaca());
+        boolean renavamExiste = veiculoRepository.listarPorRenavam(veiculo.getRenavam());
+        boolean chassiExiste = veiculoRepository.listarPorChassi(veiculo.getChassi());
 
         if (clienteExiste == null) {
             throw new EntityNotFoundException("Cliente não encontrado para o ID Cliente informado");
-        } else if (placaExiste != null) {
+        } else if (placaExiste) {
             throw new CustomException("Esta placa já pertence a outro veículo, informe uma diferente");
-        } else if (renavamExiste != null) {
+        } else if (renavamExiste) {
             throw new CustomException("Este renavam já pertence a outro veículo, informe um diferente");
-        } else if (chassiExiste != null) {
+        } else if (chassiExiste) {
             throw new CustomException("Este chassi já pertence a outro veículo, informe um diferente");
         }
         return true;

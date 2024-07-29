@@ -82,7 +82,7 @@ public class VeiculoRepository {
         }
     }
 
-    public Veiculo listarPorPlaca(String placa) {
+    public boolean listarPorPlaca(String placa) {
         Session session = sessionFactory.openSession();
 
         try {
@@ -92,9 +92,9 @@ public class VeiculoRepository {
             Veiculo veiculo = (Veiculo) query.uniqueResult();
 
             if(veiculo == null){
-                throw new EntityNotFoundException("Veículo não encontrado para os parâmetros informados");
+                return false;
             }
-            return veiculo;
+            return true;
 
         } catch (HibernateException he) {
             throw new HibernateException("Erro ao consultar no banco de dados!");
@@ -103,7 +103,7 @@ public class VeiculoRepository {
         }
     }
 
-    public Veiculo listarPorChassi(String chassi) {
+    public boolean listarPorChassi(String chassi) {
         Session session = sessionFactory.openSession();
 
         try {
@@ -113,9 +113,9 @@ public class VeiculoRepository {
             Veiculo veiculo = (Veiculo) query.uniqueResult();
 
             if(veiculo == null){
-                throw new EntityNotFoundException("Veículo não encontrado para os parâmetros informados");
+                return false;
             }
-            return veiculo;
+            return true;
 
         } catch (HibernateException he) {
             throw new HibernateException("Erro ao consultar no banco de dados!");
@@ -124,7 +124,7 @@ public class VeiculoRepository {
         }
     }
 
-    public Veiculo listarPorRenavam(String renavam) {
+    public boolean listarPorRenavam(String renavam) {
         Session session = sessionFactory.openSession();
 
         try {
@@ -134,9 +134,9 @@ public class VeiculoRepository {
             Veiculo veiculo = (Veiculo) query.uniqueResult();
 
             if(veiculo == null){
-                throw new EntityNotFoundException("Veículo não encontrado para os parâmetros informados");
+                return false;
             }
-            return veiculo;
+            return true;
 
         } catch (HibernateException he) {
             throw new RuntimeException("Erro ao consultar no banco de dados!");
