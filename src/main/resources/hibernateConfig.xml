@@ -25,8 +25,8 @@
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/seu_banco"/>
-        <property name="username" value="root"/>
-        <property name="password" value="13201320a"/>
+        <property name="username" value="seu_usuario"/>
+        <property name="password" value="sua_senha"/>
     </bean>
 
     <bean id="txManager"
