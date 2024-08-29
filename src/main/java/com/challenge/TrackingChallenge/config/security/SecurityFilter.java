@@ -1,5 +1,6 @@
 package com.challenge.TrackingChallenge.config.security;
 
+import com.challenge.TrackingChallenge.exception.CustomException;
 import com.challenge.TrackingChallenge.repositories.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,8 +30,10 @@ public class SecurityFilter extends OncePerRequestFilter {
             var login = tokenService.validaToken(token);
             UserDetails user = usuarioRepository.listarUsuario(login);
 
-            var autenticacao = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(autenticacao);
+            if(user != null){
+                var autenticacao = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(autenticacao);
+            }
         }
         filterChain.doFilter(request, response);
     }
